@@ -12,6 +12,8 @@ sealed class Screen(val route: String) {
     data object Home : Screen(route = "home_page")          // Pantalla de inicio
     data object Profile : Screen(route = "profile_page")    // Pantalla de perfil
     data object Settings : Screen(route = "settings_page")  // Pantalla de configuración
+    data object Registro : Screen(route = "registro_page")  // Formulario de registro (Guía 11)
+    data object Resumen : Screen(route = "resumen_page")    // Resumen del registro (Guía 11)
 
     // Ejemplo de ruta CON un dato extra (no se usa en esta guía, pero es importante)
     // Sirve, por ejemplo, para abrir el detalle de una mascota específica

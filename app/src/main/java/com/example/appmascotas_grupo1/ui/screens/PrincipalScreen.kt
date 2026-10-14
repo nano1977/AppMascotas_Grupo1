@@ -61,6 +61,16 @@ fun PrincipalScreen(
                         viewModel.navigateTo(Screen.Settings)
                     }
                 )
+                // Opción 3: ir al formulario de Registro (Guía 11)
+                NavigationDrawerItem(
+                    label = { Text(text = "Registro 📝") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.Registro)
+                    }
+                )
+
             }
         }
     ) {
