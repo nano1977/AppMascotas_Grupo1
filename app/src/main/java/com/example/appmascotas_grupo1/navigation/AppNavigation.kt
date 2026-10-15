@@ -1,6 +1,6 @@
 package com.example.appmascotas_grupo1.navigation
 
-
+import com.example.appmascotas_grupo1.viewmodel.PerfilViewModel
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +32,11 @@ fun AppNavigation() {
     // ViewModel del formulario (Guía 11).
     // Se crea UNA sola vez aquí, y se COMPARTE entre Registro y Resumen
     val usuarioViewModel: UsuarioViewModel = viewModel()
+
+
+    // ViewModel de la foto de perfil (Guía 13).
+    // Se crea aquí para que la foto NO se pierda al cambiar de pantalla
+    val perfilViewModel: PerfilViewModel = viewModel()
 
     // Escuchar los eventos de navegación del MainViewModel (Guía 10)
     LaunchedEffect(Unit) {
@@ -65,7 +70,11 @@ fun AppNavigation() {
             PrincipalScreen(navController = navController, viewModel = mainViewModel)
         }
         composable(route = Screen.Profile.route) {
-            PerfilScreen(navController = navController, viewModel = mainViewModel)
+            PerfilScreen(
+                navController = navController,
+                viewModel = mainViewModel,
+                perfilViewModel = perfilViewModel   // foto compartida (Guía 13)
+            )
         }
         composable(route = Screen.Settings.route) {
             ConfiguracionScreen(navController = navController, viewModel = mainViewModel)
