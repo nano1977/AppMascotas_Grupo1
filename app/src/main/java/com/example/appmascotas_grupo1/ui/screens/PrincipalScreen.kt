@@ -70,6 +70,15 @@ fun PrincipalScreen(
                         viewModel.navigateTo(Screen.Registro)
                     }
                 )
+                // Opción 4: Modo Especial (Guía 12)
+                NavigationDrawerItem(
+                    label = { Text(text = "Modo Especial ✨") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.ModoEspecial)
+                    }
+                )
 
             }
         }

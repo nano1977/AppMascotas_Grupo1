@@ -15,6 +15,8 @@ sealed class Screen(val route: String) {
     data object Registro : Screen(route = "registro_page")  // Formulario de registro (Guía 11)
     data object Resumen : Screen(route = "resumen_page")    // Resumen del registro (Guía 11)
 
+    data object ModoEspecial : Screen(route = "modo_especial_page")  // Estado y animaciones (Guía 12)
+
     // Ejemplo de ruta CON un dato extra (no se usa en esta guía, pero es importante)
     // Sirve, por ejemplo, para abrir el detalle de una mascota específica
     data class Detail(val itemId: String) : Screen(route = "detail_page/{itemId}") {

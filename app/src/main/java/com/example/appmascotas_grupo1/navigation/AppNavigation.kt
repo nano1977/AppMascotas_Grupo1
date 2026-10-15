@@ -17,6 +17,7 @@ import com.example.appmascotas_grupo1.ui.screens.ResumenScreen
 import com.example.appmascotas_grupo1.viewmodel.MainViewModel
 import com.example.appmascotas_grupo1.viewmodel.UsuarioViewModel
 import kotlinx.coroutines.flow.collectLatest
+import com.example.appmascotas_grupo1.ui.screens.ModoEspecialScreen
 
 // Grafo de navegación de TODA la app: aquí se definen todas las pantallas
 @Composable
@@ -76,6 +77,10 @@ fun AppNavigation() {
         }
         composable(route = Screen.Resumen.route) {
             ResumenScreen(navController = navController, viewModel = usuarioViewModel)
+        }
+        // ----- Pantalla de la Guía 12 -----
+        composable(route = Screen.ModoEspecial.route) {
+            ModoEspecialScreen(navController = navController)
         }
     }
 }
