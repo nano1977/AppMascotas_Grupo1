@@ -1,12 +1,16 @@
 package com.example.appmascotas_grupo1.ui.screens
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,7 +24,7 @@ import androidx.navigation.NavController
 import com.example.appmascotas_grupo1.navigation.Screen
 import com.example.appmascotas_grupo1.viewmodel.UsuarioViewModel
 
-// Pantalla con el formulario de registro y sus validaciones
+// Pantalla con el formulario de registro, sus validaciones e íconos
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistroScreen(
@@ -34,7 +38,6 @@ fun RegistroScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Registro 🐾") },
-                // Flecha para volver a la pantalla anterior
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -50,22 +53,25 @@ fun RegistroScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .imePadding()                           // deja espacio cuando aparece el teclado
-                .verticalScroll(rememberScrollState())  // permite deslizar si no cabe todo
+                .imePadding()
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             // ---------- Campo: Nombre ----------
             OutlinedTextField(
-                value = estado.nombre,                       // lo que muestra el campo
-                onValueChange = viewModel::onNombreChange,   // qué hacer al escribir
+                value = estado.nombre,
+                onValueChange = viewModel::onNombreChange,
                 label = { Text("Nombre") },
-                isError = estado.errores.nombre != null,     // borde rojo si hay error
-                supportingText = {                           // mensaje de error debajo
+                leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },  // ícono del campo
+                trailingIcon = { IconoError(visible = estado.errores.nombre != null) },   // ⚠️ si hay error
+                isError = estado.errores.nombre != null,
+                supportingText = {
                     estado.errores.nombre?.let {
                         Text(text = it, color = MaterialTheme.colorScheme.error)
                     }
                 },
+                singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -74,13 +80,16 @@ fun RegistroScreen(
                 value = estado.correo,
                 onValueChange = viewModel::onCorreoChange,
                 label = { Text("Correo electrónico") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email), // teclado con @
+                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+                trailingIcon = { IconoError(visible = estado.errores.correo != null) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 isError = estado.errores.correo != null,
                 supportingText = {
                     estado.errores.correo?.let {
                         Text(text = it, color = MaterialTheme.colorScheme.error)
                     }
                 },
+                singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -89,7 +98,9 @@ fun RegistroScreen(
                 value = estado.clave,
                 onValueChange = viewModel::onClaveChange,
                 label = { Text("Contraseña") },
-                visualTransformation = PasswordVisualTransformation(),  // muestra •••• en vez del texto
+                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                trailingIcon = { IconoError(visible = estado.errores.clave != null) },
+                visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 isError = estado.errores.clave != null,
                 supportingText = {
@@ -97,6 +108,7 @@ fun RegistroScreen(
                         Text(text = it, color = MaterialTheme.colorScheme.error)
                     }
                 },
+                singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -105,12 +117,15 @@ fun RegistroScreen(
                 value = estado.direccion,
                 onValueChange = viewModel::onDireccionChange,
                 label = { Text("Dirección") },
+                leadingIcon = { Icon(Icons.Default.Home, contentDescription = null) },
+                trailingIcon = { IconoError(visible = estado.errores.direccion != null) },
                 isError = estado.errores.direccion != null,
                 supportingText = {
                     estado.errores.direccion?.let {
                         Text(text = it, color = MaterialTheme.colorScheme.error)
                     }
                 },
+                singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -124,19 +139,27 @@ fun RegistroScreen(
                 Text("Acepto los términos y condiciones")
             }
 
-            // Mensaje de error de los términos (mejora respecto a la guía)
+            // Mensaje de error de los términos, con su ícono ⚠️
             estado.errores.terminos?.let {
-                Text(
-                    text = it,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = it,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
             }
 
             // ---------- Botón: Registrar ----------
             Button(
                 onClick = {
-                    // Solo si TODO es válido, vamos al Resumen
                     if (viewModel.validarFormulario()) {
                         navController.navigate(Screen.Resumen.route)
                     }
@@ -146,5 +169,17 @@ fun RegistroScreen(
                 Text("Registrar")
             }
         }
+    }
+}
+
+// Componente reutilizable: ícono de advertencia rojo que solo aparece si hay error
+@Composable
+private fun IconoError(visible: Boolean) {
+    if (visible) {
+        Icon(
+            imageVector = Icons.Default.Warning,
+            contentDescription = "Error en el campo",
+            tint = MaterialTheme.colorScheme.error
+        )
     }
 }
