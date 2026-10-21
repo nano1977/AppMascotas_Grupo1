@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appmascotas_grupo1.ui.screens.ConfiguracionScreen
+import com.example.appmascotas_grupo1.ui.screens.HomeScreenAdaptable
 import com.example.appmascotas_grupo1.ui.screens.PerfilScreen
 import com.example.appmascotas_grupo1.ui.screens.PrincipalScreen
 import com.example.appmascotas_grupo1.ui.screens.RegistroScreen
@@ -90,6 +91,10 @@ fun AppNavigation() {
         // ----- Pantalla de la Guía 12 -----
         composable(route = Screen.ModoEspecial.route) {
             ModoEspecialScreen(navController = navController)
+        }
+        // ----- Pantalla de la Guía 9 -----
+        composable(route = Screen.Adaptable.route) {
+            HomeScreenAdaptable()
         }
     }
 }

@@ -17,6 +17,8 @@ sealed class Screen(val route: String) {
 
     data object ModoEspecial : Screen(route = "modo_especial_page")  // Estado y animaciones (Guía 12)
 
+    data object Adaptable : Screen(route = "adaptable_page")  // Diseño adaptable (Guía 9)
+
     // Ejemplo de ruta CON un dato extra (no se usa en esta guía, pero es importante)
     // Sirve, por ejemplo, para abrir el detalle de una mascota específica
     data class Detail(val itemId: String) : Screen(route = "detail_page/{itemId}") {

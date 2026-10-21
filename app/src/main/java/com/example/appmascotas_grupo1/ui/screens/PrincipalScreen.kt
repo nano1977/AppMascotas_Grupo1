@@ -78,6 +78,17 @@ fun PrincipalScreen(
                         scope.launch { drawerState.close() }
                         viewModel.navigateTo(Screen.ModoEspecial)
                     }
+
+                )
+
+                // Opción 5: Vista adaptable (Guía 9)
+                NavigationDrawerItem(
+                    label = { Text(text = "Vista adaptable 📱") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.Adaptable)
+                    }
                 )
 
             }
